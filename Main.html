@@ -1,0 +1,308 @@
+
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ZayerxHub Key System</title>
+
+  <!-- Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&family=Rubik+Iso&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg1:#00142b; /* dark navy */
+      --bg2:#0b5bd6; /* bright blue */
+      --accent:#2f56ff;
+      --card:#1a2230;
+      --muted:#bcd0ff;
+      --glass: rgba(255,255,255,0.06);
+    }
+    html,body{ height:100%; margin:0; font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+    body{
+      background: linear-gradient(160deg, var(--bg1) 10%, #09203f 40%, var(--bg2) 100%);
+      color:#e8f1ff;
+      -webkit-font-smoothing:antialiased;
+      display:flex; align-items:flex-start; justify-content:center;
+      padding:28px;
+    }
+
+    .container{
+      width:100%;
+      max-width:920px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      border-radius:14px;
+      box-shadow: 0 12px 40px rgba(2,8,23,0.6);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+    }
+
+    /* Top bar */
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:12px 18px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+    }
+    .logo{
+      width:36px; height:36px; border-radius:8px;
+      background: linear-gradient(135deg,#2f56ff,#00b0ff);
+      display:flex; align-items:center; justify-content:center;
+      box-shadow: 0 6px 18px rgba(47,86,255,0.28), inset 0 -6px 14px rgba(0,0,0,0.25);
+      font-weight:700; color:white; font-family: "Rubik Iso", sans-serif;
+    }
+    .brand .name{ font-weight:600; font-size:16px; color:#dfeaff; }
+
+    .support-btn{
+      background:var(--glass);
+      border:1px solid rgba(255,255,255,0.06);
+      padding:8px 12px; border-radius:10px; color:#fff;
+      font-weight:600; cursor:pointer;
+      backdrop-filter: blur(6px);
+    }
+
+    /* content */
+    .hero{
+      padding:34px 36px;
+      display:flex;
+      gap:28px;
+      flex-direction:column;
+    }
+
+    .heading{
+      font-size:40px;
+      line-height:1.02;
+      margin:0;
+      font-weight:700;
+      letter-spacing:0.6px;
+    }
+    .heading .brand-blue{ color: #2f56ff; font-family: "Rubik Iso", sans-serif; font-size:44px; }
+
+    .lead{
+      margin-top:8px;
+      color:var(--muted);
+      max-width:760px;
+      font-size:15px;
+      line-height:1.6;
+    }
+
+    /* buttons area */
+    .cta-row{
+      margin-top:18px;
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      align-items:flex-start;
+    }
+
+    .btn {
+      position:relative;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:12px 20px;
+      border-radius:999px;
+      color:white;
+      font-weight:600;
+      cursor:pointer;
+      text-decoration:none;
+      border:0;
+      min-width:140px;
+      box-shadow: 0 12px 30px rgba(2,8,23,0.6);
+      transition: transform .14s ease, box-shadow .14s ease;
+    }
+    .btn:active{ transform: translateY(2px) scale(.998); }
+
+    .btn-get{
+      background: linear-gradient(90deg,#2f56ff,#0046d6);
+      box-shadow: 0 10px 30px rgba(47,86,255,0.28), 0 2px 6px rgba(0,0,0,0.4);
+    }
+    .btn-buy{
+      background: linear-gradient(90deg,#0b96ff,#002760);
+      box-shadow: 0 8px 24px rgba(6,20,70,0.5);
+      min-width:160px;
+    }
+
+    .muted-small{ color: rgba(255,255,255,0.6); font-size:13px; margin-top:10px; }
+
+    /* responsive layout */
+    @media (min-width:880px){
+      .hero{ flex-direction:row; align-items:flex-start; }
+      .left{ flex:1 1 60%; }
+      .right{ flex: 0 0 38%; display:flex; align-items:flex-start; justify-content:flex-end; padding-top:14px; }
+    }
+    /* small device */
+    @media (max-width:879px){
+      .heading{ font-size:30px; }
+      .brand-blue{ font-size:32px; }
+      .container{ margin:6px; }
+      .btn{ min-width:120px; padding:10px 14px; }
+    }
+
+    /* fake card on right */
+    .card{
+      width:270px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:12px; padding:18px; color:#dfeaff;
+      box-shadow: 0 10px 30px rgba(2,8,23,0.6);
+    }
+    .card h4{ margin:0 0 8px 0; font-size:16px; color:#9fc1ff; }
+    .card p{ margin:0; color:var(--muted); font-size:14px; line-height:1.4; }
+    .card .cta{ margin-top:14px; display:flex; gap:12px; flex-direction:column; }
+
+    /* modal */
+    .modal-back{
+      position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+      background: rgba(2,8,23,0.6); z-index:9999;
+    }
+    .modal{
+      width:320px; max-width:92%;
+      background: linear-gradient(180deg,#0f1724,#0b2036);
+      padding:18px; border-radius:12px; box-shadow:0 24px 60px rgba(2,8,23,0.8);
+      color:#eaf6ff;
+    }
+    .modal h3{ margin:0 0 8px 0; }
+    .modal p{ margin:0 0 12px 0; color:#cfe7ff; }
+    .modal .row{ display:flex; gap:12px; justify-content:flex-end; }
+    .modal .btn{ min-width:100px; padding:8px 12px; border-radius:8px; }
+
+  </style>
+</head>
+<body>
+
+  <div class="container" role="main">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo">Z</div>
+        <div class="name">ZayerxHub</div>
+      </div>
+      <button class="support-btn" id="supportBtn">Support</button>
+    </div>
+
+    <div class="hero">
+      <div class="left">
+        <h1 class="heading">Welcome To The, <span class="brand-blue">ZayerxHub</span> Key System</h1>
+        <p class="lead">
+          When you click the <strong>"Get Key"</strong> button, you will be redirected to Roblox, and we will save your HWID (hardware identifier) so you can access the script.
+        </p>
+
+        <div class="cta-row">
+          <a id="getKey" class="btn btn-get" role="button" aria-label="Get Key">
+            <!-- little pill icon -->
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="opacity:.95"><path d="M12 2C7 2 3 6 3 11c0 5 4 9 9 9s9-4 9-9c0-5-4-9-9-9zm0 13a4 4 0 110-8 4 4 0 010 8z" fill="#fff"/></svg>
+            Getkey
+          </a>
+
+        
+        </div>
+
+        <div class="muted-small">
+          When you gain access to the script, the key will expire in 24 hours. However, there's no need to worry; you can regenerate it again.
+        </div>
+
+       
+
+      <div class="right">
+        
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- modal -->
+  <div class="modal-back" id="modalBack" role="dialog" aria-hidden="true">
+    <div class="modal" role="document">
+      <h3 id="modalTitle">Fake action</h3>
+      <p id="modalText">This is a demo. The action does not perform a real purchase.</p>
+      <div class="row">
+        <button id="modalClose" class="btn" style="background:#2f56ff">Close</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // CONFIG - เปลี่ยนลิงก์นี้เป็นลิงก์จริงของคุณ
+  const KeyLink = "https://yourwebsite.com/getkey";
+
+  // ELEMENTS
+  const getKey = document.getElementById('getKey');
+  const fakeBuy = document.getElementById('fakeBuy');
+  const cardGet = document.getElementById('cardGet');
+  const cardBuy = document.getElementById('cardBuy');
+  const modalBack = document.getElementById('modalBack');
+  const modalClose = document.getElementById('modalClose');
+  const supportBtn = document.getElementById('supportBtn');
+
+  // Helper: open link safely (new tab)
+  function openLink(url){
+    // Mobile safety: try open in same tab if popup blocked
+    try {
+      const win = window.open(url, '_blank');
+      if(!win) window.location.href = url;
+    } catch(e){
+      window.location.href = url;
+    }
+  }
+
+  // main getkey behavior: redirect to KeyLink
+  function goGetKey(){
+    // small animation hint
+    getKey.style.transform = 'translateY(2px) scale(.995)';
+    setTimeout(()=> getKey.style.transform = '', 150);
+
+    // you can also copy to clipboard before redirect (optional)
+    if (navigator.clipboard){
+      navigator.clipboard.writeText(KeyLink).catch(()=>{});
+    }
+    openLink(KeyLink);
+  }
+
+  getKey.addEventListener('click', goGetKey);
+  cardGet.addEventListener('click', goGetKey);
+
+  // fake buy actions -> show modal
+  function showFake(title, text){
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalText').textContent = text;
+    modalBack.style.display = 'flex';
+    setTimeout(()=> modalBack.style.opacity = 1, 10);
+  }
+  fakeBuy.addEventListener('click', ()=> showFake('Buy Now','This is a demo fake purchase. Please contact support.'));
+  cardBuy.addEventListener('click', ()=> showFake('Buy Now','This is a demo fake purchase. Please contact support.'));
+
+  modalClose.addEventListener('click', ()=>{
+    modalBack.style.opacity = 0;
+    setTimeout(()=> modalBack.style.display='none', 220);
+  });
+
+  // support button - example: open support link (you can change)
+  supportBtn.addEventListener('click', ()=> {
+    showFake('Support','Open your support channel or contact us at support@yourdomain.com');
+  });
+
+  // Accessibility: close modal on ESC
+  window.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape' && modalBack.style.display === 'flex'){
+      modalClose.click();
+    }
+  });
+
+  // Responsive tweak: ensure buttons are large on touch devices
+  function isTouch(){ return 'ontouchstart' in window || navigator.maxTouchPoints > 0; }
+  if(isTouch()){
+    document.querySelectorAll('.btn').forEach(b=>{
+      b.style.padding = '14px 18px';
+      b.style.fontSize = '16px';
+    });
+  }
+</script>
+</body>
+</html>
