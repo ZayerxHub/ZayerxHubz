@@ -1,88 +1,124 @@
---// CONFIG
-local KeyLink = "https://yourwebsite.com/getkey" -- ลิงก์หน้า Get Key
-local CorrectKey = "MYSECRETKEY123" -- Key ที่ถูกต้อง
+--// Roblox Key UI Script
 
---// UI
-local ScreenGui = Instance.new("ScreenGui")
-local MainFrame = Instance.new("Frame")
-local UICorner = Instance.new("UICorner")
-local Title = Instance.new("TextLabel")
-local KeyBox = Instance.new("TextBox")
-local SubmitBtn = Instance.new("TextButton")
-local GetKeyBtn = Instance.new("TextButton")
-local UIStroke = Instance.new("UIStroke")
+local player = game.Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+local TweenService = game:GetService("TweenService")
 
-ScreenGui.Parent = game.CoreGui
-ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+-- สร้าง ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "KeyUI"
+screenGui.Parent = playerGui
 
-MainFrame.Parent = ScreenGui
-MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
-MainFrame.Size = UDim2.new(0, 300, 0, 200)
-MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-UICorner.Parent = MainFrame
-UIStroke.Parent = MainFrame
-UIStroke.Thickness = 2
-UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-UIStroke.Color = Color3.fromRGB(100, 100, 255)
+-- สร้าง Main Frame
+local mainFrame = Instance.new("Frame")
+mainFrame.Size = UDim2.new(0, 400, 0, 220)
+mainFrame.Position = UDim2.new(0.5, -200, 0.5, -110)
+mainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+mainFrame.BorderSizePixel = 0
+mainFrame.Parent = screenGui
 
-Title.Parent = MainFrame
-Title.Size = UDim2.new(1, 0, 0, 40)
-Title.BackgroundTransparency = 1
-Title.Text = "ZayerxHub Key System"
-Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-Title.Font = Enum.Font.GothamBold
-Title.TextSize = 20
+-- เพิ่มมุมโค้ง
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 15)
+corner.Parent = mainFrame
 
-KeyBox.Parent = MainFrame
-KeyBox.Position = UDim2.new(0.1, 0, 0.3, 0)
-KeyBox.Size = UDim2.new(0.8, 0, 0, 35)
-KeyBox.PlaceholderText = "Enter Key..."
-KeyBox.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-KeyBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-KeyBox.Font = Enum.Font.Gotham
-KeyBox.TextSize = 16
-Instance.new("UICorner", KeyBox)
+-- TextBox สำหรับกรอก Key
+local keyBox = Instance.new("TextBox")
+keyBox.Size = UDim2.new(0, 300, 0, 50)
+keyBox.Position = UDim2.new(0.5, -150, 0.25, 0)
+keyBox.PlaceholderText = "Enter your key"
+keyBox.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+keyBox.TextColor3 = Color3.fromRGB(255,255,255)
+keyBox.BorderSizePixel = 0
+keyBox.TextScaled = true
+keyBox.Parent = mainFrame
 
-SubmitBtn.Parent = MainFrame
-SubmitBtn.Position = UDim2.new(0.1, 0, 0.55, 0)
-SubmitBtn.Size = UDim2.new(0.35, 0, 0, 35)
-SubmitBtn.Text = "Submit"
-SubmitBtn.BackgroundColor3 = Color3.fromRGB(40, 170, 40)
-SubmitBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-SubmitBtn.Font = Enum.Font.GothamBold
-SubmitBtn.TextSize = 16
-Instance.new("UICorner", SubmitBtn)
+local keyCorner = Instance.new("UICorner")
+keyCorner.CornerRadius = UDim.new(0, 12)
+keyCorner.Parent = keyBox
 
-GetKeyBtn.Parent = MainFrame
-GetKeyBtn.Position = UDim2.new(0.55, 0, 0.55, 0)
-GetKeyBtn.Size = UDim2.new(0.35, 0, 0, 35)
-GetKeyBtn.Text = "Get Key"
-GetKeyBtn.BackgroundColor3 = Color3.fromRGB(40, 100, 200)
-GetKeyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-GetKeyBtn.Font = Enum.Font.GothamBold
-GetKeyBtn.TextSize = 16
-Instance.new("UICorner", GetKeyBtn)
+-- ปุ่ม Check Key
+local checkButton = Instance.new("TextButton")
+checkButton.Size = UDim2.new(0, 140, 0, 50)
+checkButton.Position = UDim2.new(0.1, 0, 0.7, 0)
+checkButton.Text = "Check Key"
+checkButton.BackgroundColor3 = Color3.fromRGB(70,130,180)
+checkButton.TextColor3 = Color3.fromRGB(255,255,255)
+checkButton.BorderSizePixel = 0
+checkButton.TextScaled = true
+checkButton.Parent = mainFrame
 
---// Functions
-SubmitBtn.MouseButton1Click:Connect(function()
-    if KeyBox.Text == CorrectKey then
-        MainFrame:Destroy()
-        game.StarterGui:SetCore("SendNotification", {
-            Title = "Key System",
-            Text = "✅ Key correct!",
-            Duration = 3
-        })
+local checkCorner = Instance.new("UICorner")
+checkCorner.CornerRadius = UDim.new(0, 12)
+checkCorner.Parent = checkButton
+
+-- ปุ่ม Get Key
+local getButton = Instance.new("TextButton")
+getButton.Size = UDim2.new(0, 140, 0, 50)
+getButton.Position = UDim2.new(0.6, 0, 0.7, 0)
+getButton.Text = "Get Key"
+getButton.BackgroundColor3 = Color3.fromRGB(50,205,50)
+getButton.TextColor3 = Color3.fromRGB(255,255,255)
+getButton.BorderSizePixel = 0
+getButton.TextScaled = true
+getButton.Parent = mainFrame
+
+local getCorner = Instance.new("UICorner")
+getCorner.CornerRadius = UDim.new(0, 12)
+getCorner.Parent = getButton
+
+-- Key ที่กำหนด
+local validKey = "MYSECRETKEY"  -- แก้เป็น key ของคุณ
+local getLink = "https://yourlink.com"  -- แก้เป็นลิ้งค์ที่ต้องการ
+
+-- ฟังก์ชัน Notification
+local function showNotification(text, color)
+    local notif = Instance.new("Frame")
+    notif.Size = UDim2.new(0, 300, 0, 50)
+    notif.Position = UDim2.new(0.5, -150, 0.1, 0)
+    notif.BackgroundColor3 = color
+    notif.BorderSizePixel = 0
+    notif.Parent = screenGui
+
+    local notifCorner = Instance.new("UICorner")
+    notifCorner.CornerRadius = UDim.new(0, 12)
+    notifCorner.Parent = notif
+
+    local notifText = Instance.new("TextLabel")
+    notifText.Size = UDim2.new(1,0,1,0)
+    notifText.Text = text
+    notifText.TextColor3 = Color3.fromRGB(255,255,255)
+    notifText.BackgroundTransparency = 1
+    notifText.TextScaled = true
+    notifText.Parent = notif
+
+    -- Animation เลื่อนขึ้น
+    local tweenUp = TweenService:Create(notif, TweenInfo.new(0.5), {Position = UDim2.new(0.5, -150, 0.05, 0)})
+    tweenUp:Play()
+
+    -- รอ 1.5 วินาที แล้วเลื่อนออก
+    tweenUp.Completed:Connect(function()
+        wait(1.5)
+        local tweenOut = TweenService:Create(notif, TweenInfo.new(0.5), {Position = UDim2.new(0.5, -150, -0.1, 0), BackgroundTransparency = 1, })
+        tweenOut:Play()
+        tweenOut.Completed:Connect(function()
+            notif:Destroy()
+        end)
+    end)
+end
+
+-- ปุ่ม Check Key
+checkButton.MouseButton1Click:Connect(function()
+    if keyBox.Text == validKey then
+        showNotification("Key Valid ✅", Color3.fromRGB(0,128,255))
+        screenGui:Destroy()
     else
-        game.Players.LocalPlayer:Kick("❌ Wrong Key! Please try again.")
+        showNotification("Wrong Key ❌", Color3.fromRGB(255,69,0))
     end
 end)
 
-GetKeyBtn.MouseButton1Click:Connect(function()
-    setclipboard(KeyLink)
-    game.StarterGui:SetCore("SendNotification", {
-        Title = "Key System",
-        Text = "✅ Link copied! Paste in browser.",
-        Duration = 3
-    })
+-- ปุ่ม Get Key
+getButton.MouseButton1Click:Connect(function()
+    setclipboard(getLink)
+    showNotification("Link Copied 📋", Color3.fromRGB(0,200,0))
 end)
